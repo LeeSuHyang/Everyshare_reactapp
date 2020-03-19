@@ -6,6 +6,8 @@ class EveryShareWrite extends Component {
   handleCreate = (data) => {
     console.log(data);
   }
+
+  
   render() {
     return (
         <div id="wrap"> 
