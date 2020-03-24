@@ -17,7 +17,7 @@ class HeaderSpecial extends Component {
                         //눌렀을 때 발생하는 함수 불러오도록 설정함
                         this.props.onChangePage();
                     }.bind(this)}><img src={logo_Image} alt="에브리쉐어"></img></a></h1>
-                    <div class="btn_nav"><a href=" /"><img src={btnMenuImage} alt="홈으로,로그아웃,내정보보기 메뉴"></img></a></div>
+                    <div className="btn_nav"><a href=" /"><img src={btnMenuImage} alt="홈으로,로그아웃,내정보보기 메뉴"></img></a></div>
                     <nav id="lnb">
                         <ul>
                             <li><a href=" /">홈으로</a></li>

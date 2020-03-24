@@ -10,7 +10,7 @@ class App extends Component {
 
       <Router>
            <Route exact path="/" component={EveryShareHome} /> 
-            <Route path="/write/:writeId" component={EveryShareWrite} />
+           <Route path="/write" component={EveryShareWrite} />
         </Router>
     );
   } 

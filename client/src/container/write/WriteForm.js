@@ -1,4 +1,6 @@
-import React, { Component } from 'react';   
+import React, { Component } from 'react';
+import axios from 'axios';
+
 import '../../css/EveryShare_write.css'
 
 
@@ -10,39 +12,107 @@ import '../../css/EveryShare_write.css'
             userChecked: 'lender',          //물품등록유형선택
             currentLocation: '',            //지역은 어디신가요
             writeCategory: '디지털/가전',    //카테고리 선택
-            rentalType: 'long',             //대여기간
-            minTerm: '',                    //대여 최소 기간 설정
-            maxTerm: ''                     //대여 최대 기간 설정
-		};	
-	}
-
+            rentalType: 'long',
+            boardTitle: '',
+            boardContents: '',
+            minTerm: '',
+            maxTerm: '',
+            perPrice:'일(Days)',
+            tempPerPrice:'',
+            dayPerPrice: '',
+            weekPerPrice: '',
+            monthPerPrice: '',
+            guarantee: '',
+        };
+    }
+    
     //state 셋팅
     handleChange = (e) => {
+
         this.setState({
-          [e.target.name]: e.target.value
+            [e.target.name]: e.target.value
         });
     }
+
+    handleChangeVale = (e) => {
+
+        this.setState({
+            tempPerPrice: e.target.value},  ()=> { 
+                
+        //기본적으로 발생하는 리로딩 이벤트 방지
+         if(this.state.perPrice === '달(Months)') {
+
+            this.setState({
+                monthPerPrice : this.state.tempPerPrice},  ()=> { 
+            });
+        } else if(this.state.perPrice === '주(Weeks)') {
+            this.setState({
+                weekPerPrice : this.state.tempPerPrice},  ()=> { 
+            });
+        } else {
+            this.setState({
+                dayPerPrice : this.state.tempPerPrice},  ()=> { 
+            });
+        }
+        });
+
+    } 
 
     //부모에게 데이터 전달
     handleSubmit = (e) => {
 
-        //기본적으로 발생하는 리로딩 이벤트 방지
+       
         e.preventDefault();
 
-        //상태값 onCreate 함수를 통해 부모에게 전달한다
-        this.props.onCreate(this.state);
+        const write = {
+            postNum: 'lend-2',
+            postType: '1',
+            writer: 'user-1',
+            currentLocation: this.state.currentLocation,
+            boardTitle: this.state.boardTitle,
 
-        //상태초기화
-        this.setState({
+            writeCategory : this.state.writeCategory,
+            boardContents: this.state.boardContents,
+            dayPerPrice: this.state.dayPerPrice,
+            weekPerPrice: this.state.weekPerPrice,
+            monthPerPrice: this.state.monthPerPrice,
+
+            minTerm: this.state.minTerm,
+            maxTerm: this.state.maxTerm,
+            rentalPeriodType: this.state.rentalType,
+            guarantee: this.state.guarantee,
+            state: '1',
+          };
+
+
+            axios.post(`http://localhost:3001/write`, { write })
+            .then(res => {
+              console.log(res);
+              console.log(res.data);
+            })
+
+        this.props.onCreate(this.state);
+    
+         // 상태 초기화
+         this.setState = ({
             userChecked: 'lender',          //물품등록유형선택
             currentLocation: '',            //지역은 어디신가요
             writeCategory: '디지털/가전',    //카테고리 선택
             rentalType: 'long',
+            boardTitle: '',
+            boardContents: '',
             minTerm: '',
-            maxTerm: ''
+            maxTerm: '',
+            perPrice:'일(Days)',
+            tempPerPrice:'',
+            dayPerPrice: '',
+            weekPerPrice: '',
+            monthPerPrice: '',
+            guarantee: '',
         });
+
+        
     }
-    
 
     render() {
 
@@ -139,11 +209,11 @@ import '../../css/EveryShare_write.css'
                         <div  className="clear"></div>
 
                         <div  className="proudct_box">
+
                             <label htmlFor="rent_contents"> 물품 이미지와 <br /> 내용을 <br />등록 해 주세요 *</label>
- 
-                            <textarea name="writeText" id="rent_contents" cols="116" rows="3"></textarea>
-                            <div  className="write_contents">
-                        
+                            <input type="text" id="board_title" name="boardTitle" value={this.state.boardTitle} onChange={this.handleChange} />
+                            <textarea name="boardContents" id="rent_contents" value={this.state.boardContents} onChange={this.handleChange.bind(this)} cols="116" rows="3"></textarea>
+                            <div className="write_contents">
                                 <label htmlFor="add_file">사진등록</label>
                                 <input type="file" id="add_file" accept="# " required multiple />
                             </div>
@@ -163,21 +233,20 @@ import '../../css/EveryShare_write.css'
                         <div  className="proudct_box">
                             <label htmlFor="retalfee_cal"> 대여비의 계산 방법을 <br /> 입력 해 주세요 *  <br />  <br />
                                 <span  className="title_span"> (반드시 1가지 방법 이상) <br /></span>
-                        
                                 <button  className="btn_cacul"></button>
                             </label>
 
                             <div  className="input_price">
 
-                                <select name="ByDate" id="retalfee_cal">
-                                    <option value="days">일(Days)</option>
-                                    <option value="days">주(Weeks)</option>
-                                    <option value="days">일(Months)</option>
+                                <select id="retalfee_cal" name="perPrice" value={this.state.perPrice} onChange={this.handleChange}>
+                                    <option>일(Days)</option>
+                                    <option>주(Weeks)</option>
+                                    <option>달(Months)</option>
                                 </select>
 
                                 <p style={textStyle}>당, </p>
 
-                                <input type="text" id="retalfee_cal_txt" />
+                                <input type="text" name="tempPerPrice" id="retalfee_cal_txt" value={this.state.tempPerPrice} onChange={this.handleChangeVale}/>
                                 <p style={textStyle}>원</p>
                                 <label htmlFor="retalfee_cal_txt"></label>
 
@@ -188,7 +257,7 @@ import '../../css/EveryShare_write.css'
                         <div  className="proudct_box">
                             <label htmlFor="deposit_cal">보증금을입력 <br />해 주세요 *</label>
 
-                            <input type="text" style={{width: '383.17px'}} id="deposit_cal" />
+                            <input type="text" style={{width: '383.17px'}} id="deposit_cal" name="guarantee" value={this.state.guarantee} onChange={this.handleChange} />
 
                             <p style={textStyle}>원</p>
 
