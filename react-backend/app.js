@@ -13,7 +13,7 @@ var bodyParser = require('body-parser');
 /* API 설계 ROUTER 연결 */
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var writeRouter = require('./routes/write');
+var boardRouter = require('./routes/board');
 
 var app = express();
 
@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /* API 설계 ROUTER 목록 */
 app.use('/', indexRouter); //메인
 app.use('/users', usersRouter); //사용자정보
-app.use('/write', writeRouter); 
+app.use('/board', writeRouter); 
 
 /* 404 에러 */
 app.use(function(req, res, next) {

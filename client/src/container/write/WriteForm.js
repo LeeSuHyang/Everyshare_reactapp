@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+
 
 import '../../css/EveryShare_write.css'
 
@@ -61,13 +61,12 @@ import '../../css/EveryShare_write.css'
     //부모에게 데이터 전달
     handleSubmit = (e) => {
 
-       
         e.preventDefault();
 
         const write = {
-            postNum: 'lend-2',
-            postType: '1',
-            writer: 'user-1',
+            postType: this.state.userChecked,
+            writerNum: 1,
+            writer: 'aaa1',
             currentLocation: this.state.currentLocation,
             boardTitle: this.state.boardTitle,
 
@@ -84,32 +83,25 @@ import '../../css/EveryShare_write.css'
             state: '1',
           };
 
-
-            axios.post(`http://localhost:3001/write`, { write })
-            .then(res => {
-              console.log(res);
-              console.log(res.data);
-            })
-
-        this.props.onCreate(this.state);
-    
-         // 상태 초기화
-         this.setState = ({
-            userChecked: 'lender',          //물품등록유형선택
-            currentLocation: '',            //지역은 어디신가요
-            writeCategory: '디지털/가전',    //카테고리 선택
-            rentalType: 'long',
-            boardTitle: '',
-            boardContents: '',
-            minTerm: '',
-            maxTerm: '',
-            perPrice:'일(Days)',
-            tempPerPrice:'',
-            dayPerPrice: '',
-            weekPerPrice: '',
-            monthPerPrice: '',
-            guarantee: '',
-        });
+        this.props.onCreate(write);
+        
+            // 상태 초기화
+            this.setState = ({
+                userChecked: 'lender',          //물품등록유형선택
+                currentLocation: '',            //지역은 어디신가요
+                writeCategory: '디지털/가전',    //카테고리 선택
+                rentalType: 'long',
+                boardTitle: '',
+                boardContents: '',
+                minTerm: '',
+                maxTerm: '',
+                perPrice:'일(Days)',
+                tempPerPrice:'',
+                dayPerPrice: '',
+                weekPerPrice: '',
+                monthPerPrice: '',
+                guarantee: '',
+            });
 
         
     }

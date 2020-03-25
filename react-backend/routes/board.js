@@ -2,15 +2,15 @@ const express = require('express');
 const pool = require('../config/pool')
 const router = express.Router();
 
-
 /* 빌려주는 게시판 관련 */
-/* insert문 */
-router.post('/', async (req, res, next) => {
 
-   var data = req.body.write
-    
-    var postNum = data.postNum
+/* insert문 */
+router.post('/write', async (req, res, next) => {
+
+    var data = req.body.write
+
     var postType = data.postType
+    var writerNum = data.writerNum
     var writer = data.writer
     var currentLocation = data.currentLocation   
     var boardTitle = data.boardTitle
@@ -27,19 +27,23 @@ router.post('/', async (req, res, next) => {
     var guarantee = data.guarantee
     var state = data.state
 
+    var sqlQuery = 'INSERT INTO lendBoard set ?'
+    var sqlData = { 
+                    postType:postType, postWriterNum:writerNum, postWriter:writer, location:currentLocation,
+                    postTitle:boardTitle, productCategory:writeCategory, postContents:boardContents, pricePerDay:dayPerPrice,
+                    pricePerWeek:weekPerPrice, pricePerMonth:monthPerPrice, minPeriod:minTerm, maxPeriod:maxTerm, 
+                    rentalPeriodType:rentalPeriodType, guarantee:guarantee, state:state
+                  }
+
     const conn = await pool.getConnection()
     try {
-      const data = await conn.query('INSERT INTO lendBoard set ?', {postNumL:postNum, postTypeL:postType , postWriterL:writer, location:currentLocation,
-      postTitle:boardTitle, productCategory:writeCategory, postContents:boardContents, pricePerDay:dayPerPrice,
-      pricePerWeek:weekPerPrice,pricePerMonth:monthPerPrice, minPeriod:minTerm, maxPeriod:maxTerm, rentalPeriodType:rentalPeriodType,
-       guarantee:guarantee, state:state})
+      const data = await conn.query(sqlQuery, sqlData)
       
       await conn.commit() 
       return res.json(data)
 
     } catch (error) {
-      console.log('insert 요청에 실패하였다')
-      console.log(err)
+      console.log(err,'lendBoard의 insert가 수행되지 않았습니다.')
       conn.rollback()
     } finally {
       conn.release() // pool에 connection 반납
@@ -50,7 +54,7 @@ router.post('/', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
  
   try {
-    const data = await pool.query('select * from customerInfo')
+    const data = await pool.query('select * from lendBoard')
     return res.json(data[0])
 
   } catch (err) {
