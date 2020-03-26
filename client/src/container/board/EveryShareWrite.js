@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../../css/EveryShare_write.css'
 import HeaderSpecial from "../../component/header_special";
 import WriteForm from "./WriteForm";
 import axios from 'axios';

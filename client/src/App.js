@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import EveryShareHome from "./container/main/EveryShareHome";
-import EveryShareWrite from "./container/write/EveryShareWrite";
+import EveryShareWrite from "./container/board/EveryShareWrite";
+import EveryShareBoardList from './container/board/EveryShareList';
 
 class App extends Component {
 
@@ -10,8 +11,9 @@ class App extends Component {
 
       <Router>
            <Route exact path="/" component={EveryShareHome} /> 
-           <Route path="/write" component={EveryShareWrite} />
-        </Router>
+           <Route path="/board/write" component={EveryShareWrite} />
+           <Route path="/board" component={EveryShareBoardList} />
+      </Router>
     );
   } 
 }

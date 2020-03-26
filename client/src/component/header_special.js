@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import '../css/common.css'
 import '../css/EveryShare_specialHeader.css'
-import '../css/EveryShare_write.css'
 import logo_Image from "../img/common/everyshareLogo.png";
 import btnMenuImage from "../img/common/special_menu.png";
 

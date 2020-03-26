@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /* API 설계 ROUTER 목록 */
 app.use('/', indexRouter); //메인
 app.use('/users', usersRouter); //사용자정보
-app.use('/board', writeRouter); 
+app.use('/board', boardRouter); 
 
 /* 404 에러 */
 app.use(function(req, res, next) {
