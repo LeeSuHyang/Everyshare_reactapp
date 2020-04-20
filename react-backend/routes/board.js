@@ -1,8 +1,9 @@
 const express = require('express');
-const pool = require('../config/pool')
+const pool = require('../config/pool');
 const router = express.Router();
 
-/* 빌려주는 게시판 관련 */
+
+/* 게시판 관련 */
 
 /* insert문 */
 router.post('/write', async (req, res, next) => {
@@ -36,6 +37,7 @@ router.post('/write', async (req, res, next) => {
                   }
 
     const conn = await pool.getConnection()
+
     try {
       const data = await conn.query(sqlQuery, sqlData)
       
@@ -52,14 +54,23 @@ router.post('/write', async (req, res, next) => {
 
 /* select 문 */
 router.get('/', async (req, res, next) => {
- 
+  
+  const conn = await pool.getConnection()
+  var sqlQuery = '(SELECT postNum,postType,postWriter,location,postTitle,postDate,state' +
+                 ' FROM lendBoard where state not in(3))' +
+                 'UNION (SELECT postNum,postType,postWriter,location,postTitle,postDate,state' +
+                 ' FROM borrowBoard where state not in(3)) order by postDate DESC'
+  
   try {
-    const data = await pool.query('select * from lendBoard')
-    return res.json(data[0])
+    const data = await conn.query(sqlQuery)
+    await conn.commit() 
 
+    return res.json(data[0])
   } catch (err) {
-    console.log(res)
-    return res.status(500).json(err)
+    console.log(err,'게시판 목록을 가져오지 못했습니다.')
+    conn.rollback()
+  } finally {
+    conn.release() // pool에 connection 반납
   }
   
 });

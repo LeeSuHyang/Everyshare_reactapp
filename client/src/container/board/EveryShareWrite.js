@@ -20,7 +20,7 @@ class EveryShareWrite extends Component {
             <WriteForm onCreate={this.handleCreate}/>
         </div>  
     );
-  } 
+  }
 }
  
 export default EveryShareWrite;

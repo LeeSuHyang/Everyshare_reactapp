@@ -6,7 +6,7 @@ const pool = mysql.createPool({
   user: 'root',
   password: '1234',
   database: 'everyshare',
-  connectionLimit: 10
+  connectionLimit: 10,
 })
 
 module.exports = pool

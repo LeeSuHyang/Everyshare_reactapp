@@ -4,8 +4,7 @@ import BoardList from "../board/boardList"
 
 class EveryShareList extends Component {
   render() {
-    return (
-           
+    return (   
         <div id="wrap">
           <HeaderBasic></HeaderBasic>
           <BoardList></BoardList>

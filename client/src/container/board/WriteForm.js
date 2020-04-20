@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-
-
 import '../../css/EveryShare_write.css'
 
 
@@ -39,7 +37,6 @@ import '../../css/EveryShare_write.css'
         this.setState({
             tempPerPrice: e.target.value},  ()=> { 
                 
-        //기본적으로 발생하는 리로딩 이벤트 방지
          if(this.state.perPrice === '달(Months)') {
 
             this.setState({

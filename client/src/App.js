@@ -8,14 +8,14 @@ class App extends Component {
 
   render() {
     return (
-
       <Router>
            <Route exact path="/" component={EveryShareHome} /> 
            <Route path="/board/write" component={EveryShareWrite} />
-           <Route path="/board" component={EveryShareBoardList} />
+           <Route path="/board/" component={EveryShareBoardList} />
       </Router>
     );
   } 
+  
 }
- 
+
 export default App;
