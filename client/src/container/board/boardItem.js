@@ -1,44 +1,54 @@
 import React, { Component } from "react";
-import moment from 'moment'
+import moment from "moment";
 
 class BoardItem extends Component {
-
-  componentDidMount() {
-    this.selectType();
-  }
   selectType(postType) {
-    if(postType === "lender") {
-      return (<td style={{background: '#97616C'}}></td>)
+    if (postType === 1) {
+      return "[대여]";
     } else {
-      return (<td style={{background: '#334663'}}></td>)
+      return "[요청]";
+    }
+  }
+
+  TransactionStatus(state) {
+    if (state === "2") {
+      return <div style={{ color: "#1D1D1D" }}>거래완료</div>;
+    } else if (state === "1") {
+      return <div style={{ color: "#334663" }}>거래중</div>;
+    } else {
+      return <div style={{ color: "#C10000" }}>거래대기</div>;
     }
   }
 
   render() {
-
+    let coustomStyle =
+      this.props.row.state === "2"
+        ? {
+            color: "#9E9E9E",
+            background: "#E4E4E4",
+            textDecoration: "line-through",
+          }
+        : {};
+    let coustomStyl2 =
+      this.props.row.type === 1 ? { color: "#97616C" } : { color: "#334663" };
     return (
-
-    <tr>
-        {/* 종류에 따른 색 표시 */}
-          {this.selectType(this.props.row.postType)}
-        {/* 프로필사진 */}
-        <td>
-          <div></div>
-        </td>
-        {/* 닉네임 */}
-        <td>
-          {this.props.row.postWriter}
-        </td>
-        {/* 제목 */}
-        <td>{this.props.row.postTitle}</td>
-        {/* 날짜 */}
-        <td>{moment(this.props.row.postDate).format('YYYY/MM/DD')}</td>
-        {/* 거래 상태*/}
-        <td>{this.props.row.state}</td>
-    </tr>
+      <div className="boardList_contents" style={coustomStyle}>
+        <div className="board_type" style={coustomStyl2}>
+          {this.selectType(this.props.row.type)}
+        </div>
+        <div className="user_info">
+          <div className="profil_box"></div>
+          <div className="user_info_text">
+            {this.props.row.nickName} <br />
+            <span>@{this.props.row.userID}</span>
+          </div>
+        </div>
+        <div>{this.props.row.postTitle}</div>
+        <div>{moment(this.props.row.postDate).format("YYYY/MM/DD")}</div>
+        {this.TransactionStatus(this.props.row.state)}
+      </div>
     );
   }
 }
-
 
 export default BoardItem;

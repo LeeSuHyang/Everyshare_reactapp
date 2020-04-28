@@ -1,57 +1,50 @@
 import React, { Component } from "react";
-import axios from 'axios';
-import BoardItem from "./boardItem"
+import axios from "axios";
+import BoardItem from "./boardItem";
+import InfiniteScroll from "react-infinite-scroller";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
+
 import "../../css/EveryShare_boardlist.css";
 
 class BoardList extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       category: "디지털/가전",
-      allBoardList: [],
-      currentBoardList: [],
+      allBoardData: [],
+      currentBoardData: [],
+      preBoardPerPage: 10,
+      boardPerPage: 10,
     };
-    this.preBoardContentsPerList = 0;
-    this.boardContentsPerList = 10;
   }
 
   //컴포넌트 생성 후, 데이터 가져오기
-  componentDidMount() {
-      this._getList();
-  }
+  componentDidMount = async () => {
+    const boardData = await axios.get("http://localhost:3001/board/");
+    const allBoardDatas = boardData.data;
 
-  _getList(){ 
-    axios.get('http://localhost:3001/board/') 
-        .then(allBoardList => {
-            console.log(allBoardList.data)
-            const allList = allBoardList.data;
+    this.setState({
+      allBoardData: allBoardDatas
+    });
+  };
 
-            this.setState({ 
-              allBoardList,
-              currentBoardList: allList.slice(0, this.boardContentsPerList)
-            }); 
-
-            console.log(this.state.currentBoardList)
-        })
-        .catch(error => { console.log(error); }); 
-    }
-
-    //데이터 추가로 가져오기 위한 함수
-    fetchMoreData = () => {
-      setTimeout(() => {
-        this.setState({
-          //이전의 보드 갯수 값을 이전보드 값 변수에 저장한다
-          preBoardContentsPerList : this.state.boardContentsPerList,
-          //보드 갯수에 갯수를 더하여 준다
-          boardContentsPerList: this.setState.boardContentsPerList+5,
-          //concat으로 현재 배열에 추가 해 주면 될듯
-        });
-      }, 1500);
-    };
+  //데이터 추가로 가져오기 위한 함수
+  fetchMoreData = () => {
+    setTimeout(() => {
+      this.setState({
+        preBoardPerPage: this.state.boardPerPage,
+        boardPerPage: this.state.boardPerPage + 10,
+        currentBoardData: this.state.currentBoardData.concat(this.state.allBoardData.slice(
+          this.state.preBoardPerPage,
+          this.state.boardPerPage
+        ))
+      });
+    }, 1500);
+  };
 
   render() {
-    const currentBoardList = this.state.currentBoardList;
+    const currentBoardList = this.state.currentBoardData;
 
     return (
       <section id="main_contents">
@@ -65,27 +58,32 @@ class BoardList extends Component {
               <option>거래완료</option>
             </select>
           </div>
-
-          <table className="board_list_table">
-            <thead>
-              <tr>
-                <th></th>
-                <th colSpan="2">거래자 정보</th>
-                <th>제목</th>
-                <th>등록날짜</th>
-                <th>거래상태</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {/* 반복구간 */}
-              {
-                currentBoardList.map((row,index) =>
-                    (<BoardItem key={index} row={row}></BoardItem>)
-                  )
-              }
-            </tbody>
-          </table>
+          <div className="boardList_wrap">
+            <div className="boardList_header">
+              <div>거래유형</div>
+              <div>거래자 정보</div>
+              <div>제목</div>
+              <div>등록날짜</div>
+              <div>거래상태</div>
+            </div>
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={this.fetchMoreData}
+              hasMore={true || false}
+              loader={<div className="loader loaderBox"><Loader
+              type="TailSpin"
+              color="#979797"
+              height={40}
+              width={40}
+              timeout={3000} //3 secs
+      
+           /></div>}
+            >
+              {currentBoardList.map((row, index) => (
+                <BoardItem key={index} row={row}></BoardItem>
+              ))}
+            </InfiniteScroll>
+          </div>
         </div>
       </section>
     );
