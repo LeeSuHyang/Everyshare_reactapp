@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import '../../css/EveryShare_write.css'
-
 
  class WriteForm extends Component {
      

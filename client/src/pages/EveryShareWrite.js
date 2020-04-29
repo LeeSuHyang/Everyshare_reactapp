@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import '../../css/EveryShare_write.css'
-import HeaderSpecial from "../../component/header_special";
-import WriteForm from "./WriteForm";
+import '../lib/css/EveryShare_write.css'
+import WriteForm from "../container/write/WriteForm";
 import axios from 'axios';
 
 class EveryShareWrite extends Component {
-
+  
   handleCreate = (write) => {
     axios.post(`http://localhost:3001/board/write`, { write })
     .then(res => {
@@ -14,11 +13,9 @@ class EveryShareWrite extends Component {
   }
 
   render() {
+
     return (
-        <div id="wrap"> 
-            <HeaderSpecial />   
-            <WriteForm onCreate={this.handleCreate}/>
-        </div>  
+          <WriteForm onCreate={this.handleCreate}/>
     );
   }
 }

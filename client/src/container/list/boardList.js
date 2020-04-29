@@ -5,8 +5,6 @@ import InfiniteScroll from "react-infinite-scroller";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 
-import "../../css/EveryShare_boardlist.css";
-
 class BoardList extends Component {
   constructor(props) {
     super(props);
@@ -75,9 +73,7 @@ class BoardList extends Component {
               color="#979797"
               height={40}
               width={40}
-              timeout={3000} //3 secs
-      
-           /></div>}
+              timeout={3000} /></div>}
             >
               {currentBoardList.map((row, index) => (
                 <BoardItem key={index} row={row}></BoardItem>

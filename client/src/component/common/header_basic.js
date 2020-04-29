@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import '../css/common.css'
-import '../css/EveryShare_basicHeader.css'
-import logo_Image from "../img/common/everyshareLogo.png";
+import '../../lib/css/common.css'
+import '../../lib/css/EveryShare_basicHeader.css'
+import logo_Image from "../../lib/img/common/everyshareLogo.png";
+import { Link } from 'react-router-dom';
 
 
 class HeaderBasic extends Component {
@@ -25,14 +26,13 @@ class HeaderBasic extends Component {
           
                 <div className="header_logo_wrap">
                     <div className="logo_wrap">
-                    <h1><a href=" #"><img src={logo_Image} alt="에브리쉐어" /></a></h1>
+                    <h1><Link to={'/'}><img src={logo_Image} alt="에브리쉐어" /></Link></h1>
                         <form name="header_search_box" action="#" method="get" target="_blank">
                             <input type="search" />
                         </form>
                     </div>
                 </div>
        
-
                 <nav className="main_nav_wrap">
                     <ul className="main_nav">
                         <li><a href=" /">글쓰기</a></li>
