@@ -10,14 +10,15 @@ import NotFound from "./NotFound"
 
 class App extends Component  {
   render() {
-    return (
+    
+    return  (
       <Router>
         <div id="wrap">
           <Header />
           <main>
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/board" component={Board} />
+              <Route path="/board/:category" component={Board} />
               <Route path="/view/:postNum" component={View} />
               <Route path="/write" component={Write} />
               <Route component={NotFound} />
@@ -25,6 +26,7 @@ class App extends Component  {
           </main>
         </div>
       </Router>
+
     );
   }
 }

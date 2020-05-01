@@ -57,16 +57,39 @@ router.get('/', async (req, res, next) => {
   
   const conn = await pool.getConnection()
   //1이 빌려주는 게시판 2가 빌리는 게시판
+  const categoryNum = req.query.category
+
+ 
+  let productCategory
+
+  if(categoryNum == 1) {
+    productCategory = '디지털/가전'
+  } else if(categoryNum == 2) {
+    productCategory = '유아동'
+  } else if(categoryNum == 3) {
+    productCategory = '생활용품'
+  } else if(categoryNum == 4) {
+    productCategory = '의류/잡화'
+  } else if(categoryNum == 5) {
+    productCategory = '스포츠/레저'
+  } else if(categoryNum == 6) {
+    productCategory = '도서/취미'
+  } else {
+    productCategory = '기타용품'
+  }
+  
+  console.log(productCategory)
   var sqlQuery = '(SELECT postNum,postWriterNum,userID,nickName,postTitle,postDate,state, 1 as type ' +
-                 ' FROM lendBoard left join userInfo on lendBoard.postWriterNum = userInfo.userNum where state not in(3))' +
+                 ' FROM lendBoard left join userInfo on lendBoard.postWriterNum = userInfo.userNum where lendBoard.productCategory =\'' + productCategory + '\' AND state not in(3))'
                  'UNION (SELECT postNum,postWriterNum,userID,nickName,postTitle,postDate,state, 2 as type' +
-                 ' FROM requestboard left join userInfo on requestboard.postWriterNum = userInfo.userNum where state not in(3)) order by postDate DESC'
+                 ' FROM requestboard left join userInfo on requestboard.postWriterNum = userInfo.userNum where requestboard.productCategory = \'' + productCategory + '\' AND state not in(3)) order by postDate DESC'
   
   try {
     const data = await conn.query(sqlQuery)
     await conn.commit() 
 
     return res.json(data[0])
+
   } catch (err) {
     console.log(err,'게시판 목록을 가져오지 못했습니다.')
     conn.rollback()

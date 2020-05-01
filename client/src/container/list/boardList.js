@@ -4,51 +4,100 @@ import BoardItem from "./boardItem";
 import InfiniteScroll from "react-infinite-scroller";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
+import { withRouter } from "react-router-dom";
 
 class BoardList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: "디지털/가전",
+      category: this.props.location.state.category,
       allBoardData: [],
       currentBoardData: [],
-      preBoardPerPage: 10,
-      boardPerPage: 10,
+      preBoardPerPage: 0,
+      boardPerPage: 0,
+      maxPage: true,
     };
   }
 
-  //컴포넌트 생성 후, 데이터 가져오기
-  componentDidMount = async () => {
-    const boardData = await axios.get("http://localhost:3001/board/");
-    const allBoardDatas = boardData.data;
+  _getList() {
+    const search = this.props.location.search;
+    const params = new URLSearchParams(search);
+    const category = params.get("category");
+    console.log(category);
 
-    this.setState({
-      allBoardData: allBoardDatas
-    });
+    axios.get("http://localhost:3001/board", {
+        params: {
+          category: category,
+        },
+      })
+      .then((data) => {
+        const allBoardDatas = data.data;
+
+        console.log(allBoardDatas);
+        this.setState({
+          allBoardData: allBoardDatas,
+          preBoardPerPage : this.state.allBoardData.length,
+          maxPage : true,
+        });
+      });
+  }
+
+  componentDidMount = () => {
+    this._getList();
   };
+
+  componentDidUpdate(prevProps) {
+    const currentSearch = this.props.location;
+    const previousSearch = prevProps.location;
+
+    if (currentSearch !== previousSearch) {
+      this.setState({
+        category: this.props.location.state.category,
+        allBoardData: [],
+        currentBoardData: [],
+        preBoardPerPage: 0,
+        boardPerPage: 0,
+      });
+      
+      this._getList();
+
+    }
+  }
 
   //데이터 추가로 가져오기 위한 함수
   fetchMoreData = () => {
     setTimeout(() => {
+
+      if(this.state.currentBoardData.length >= this.state.allBoardData.length) {
+        console.log("더 이상 데이터 없음")
+        this.setState({
+          maxPage : false,
+        })
+      }
+
       this.setState({
         preBoardPerPage: this.state.boardPerPage,
-        boardPerPage: this.state.boardPerPage + 10,
-        currentBoardData: this.state.currentBoardData.concat(this.state.allBoardData.slice(
-          this.state.preBoardPerPage,
-          this.state.boardPerPage
-        ))
+        boardPerPage: this.state.boardPerPage + 5,
+        currentBoardData: this.state.currentBoardData.concat(
+          this.state.allBoardData.slice(
+            this.state.preBoardPerPage,
+            this.state.boardPerPage
+          )
+        ),
       });
+
+  
     }, 1500);
   };
 
   render() {
-    const currentBoardList = this.state.currentBoardData;
+    let currentBoardList = this.state.currentBoardData;
 
     return (
       <section id="main_contents">
         <div id="contents_wrap">
           <div className="title_wrap">
-            <h3>디지털/가전</h3>
+            <h3>{this.state.category}</h3>
             <select name="trade_state" id="board_trade_state">
               <option>전체 거래 보기</option>
               <option>거래중</option>
@@ -67,16 +116,21 @@ class BoardList extends Component {
             <InfiniteScroll
               pageStart={0}
               loadMore={this.fetchMoreData}
-              hasMore={true || false}
-              loader={<div className="loader loaderBox"><Loader
-              type="TailSpin"
-              color="#979797"
-              height={40}
-              width={40}
-              timeout={3000} /></div>}
+              hasMore={this.state.maxPage}
+              loader={
+                <div className="loader loaderBox" key={0}>
+                  <Loader
+                    type="TailSpin"
+                    color="#979797"
+                    height={40}
+                    width={40}
+                    timeout={3000}
+                  />
+                </div>
+              }
             >
               {currentBoardList.map((row, index) => (
-                <BoardItem key={index} row={row}></BoardItem>
+                <BoardItem row={row} key={index}></BoardItem>
               ))}
             </InfiniteScroll>
           </div>
@@ -86,4 +140,4 @@ class BoardList extends Component {
   }
 }
 
-export default BoardList;
+export default withRouter(BoardList);

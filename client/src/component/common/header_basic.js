@@ -3,6 +3,7 @@ import '../../lib/css/common.css'
 import '../../lib/css/EveryShare_basicHeader.css'
 import logo_Image from "../../lib/img/common/everyshareLogo.png";
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 
 class HeaderBasic extends Component {
@@ -35,14 +36,14 @@ class HeaderBasic extends Component {
        
                 <nav className="main_nav_wrap">
                     <ul className="main_nav">
-                        <li><a href=" /">글쓰기</a></li>
-                        <li><a href=" /">디지털/가전</a></li>
-                        <li><a href=" /">유아동</a></li>
-                        <li><a href=" /">생활용품</a></li>
-                        <li><a href=" /">의류/잡화</a></li>
-                        <li><a href=" /">스포츠/레저</a></li>
-                        <li><a href=" /">도서/취미</a></li>
-                        <li><a href=" /">기타용품</a></li>
+                        <li><Link to="/write" >글쓰기</Link></li>
+                        <li><Link to={{pathname:'/board/digital?category=1', state: {category: "디지털/가전"} }}>디지털/가전</Link></li>
+                        <li><Link to={{pathname:'/board/kids?category=2', state: {category: "유아동"} }}>유아동</Link></li>
+                        <li><Link to={{pathname:'/board/daily?category=3', state: {category: "생활용품"} }}>생활용품</Link></li>
+                        <li><Link to={{pathname:'/board/clothes?category=4', state: {category: "의류/잡화"} }}>의류/잡화</Link></li>
+                        <li><Link to={{pathname:'/board/sport?category=5', state: {category: "스포츠/레저"} }}>스포츠/레저</Link></li>
+                        <li><Link to={{pathname:'/board/book?category=6', state: {category: "도서/취미"} }}>도서/취미</Link></li>
+                        <li><Link to={{pathname:'/board/etc?category=7', state: {category: "기타용품"} }}>기타용품</Link></li>
                     </ul>
                 </nav>
         
@@ -53,5 +54,4 @@ class HeaderBasic extends Component {
     }
 }
 
-//이 구문이 있어야 외부에서 사용 가능하게 함
-export default HeaderBasic;
+export default withRouter(HeaderBasic);
