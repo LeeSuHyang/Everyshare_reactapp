@@ -1,0 +1,165 @@
+/***********
+***********
+
+헤더영역 css
+여기에 다른 css코드 작성금지
+
+************
+***********/
+#wrap {
+    overflow: hidden;
+}
+
+/* 글로벌 링크 영역 시작 */
+.header_wrap {
+    width: 100%;
+    height: 257px;
+    background-color: #fff;
+}
+
+.header_wrap > header {
+    width: 100%;
+    height: 256px;
+}
+
+header > .global_nav_wrap {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #CDC9C5;
+}
+
+.global_nav {
+    width: 1280px;
+    margin: 0 auto;
+}
+
+.global_nav > ul {
+    height: 50px;
+    float: right;
+}
+
+.global_nav > ul > li {
+    float: left;
+    line-height: 50px;
+    
+}
+
+.global_nav > ul > li > a {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 1px solid #CDC9C5;
+    color: #000;
+}
+
+.global_nav > ul > li:last-child > a {
+   border : 0;
+}
+
+/* 글로벌 링크 영역 끝 */
+
+
+/* 메인로고 및 검색 영역 시작 */
+
+.header_logo_wrap {
+    width: 100%;
+    height: 135px;
+    border-bottom: 1px solid #CDC9C5;
+    background-color: #fff;
+}
+
+.header_logo_wrap > .logo_wrap {
+   width: 1140px;
+   margin: 0 auto;
+   padding-top: 40px;
+   padding-left: 30px;
+   height: 135px;
+   box-sizing: border-box;
+}
+
+.logo_wrap > h1, form {
+    float: left;
+}
+
+.logo_wrap > h1 > a > img {
+    width: 200px;
+}
+
+.logo_wrap > form > input[type=search] {
+    width: 850px;
+    margin-left: 20px;
+    height: 50px;
+    border:0;
+    background: 0;
+    border-bottom: 1px solid #CDC9C5;
+    padding-left: 15px;
+    font-size: 20px;
+    background : url('../img/common/header_search.png') no-repeat;
+    background-position: 98% 15px;
+    -webkit-background-size: 23px;
+    background-size: 23px;;
+}
+
+.logo_wrap > form > input[type=search]:focus {outline:none;}
+
+/* 메인로고 및 검색 영역 끝 */
+
+
+/* 사이트 이동 영역 시작 */
+.main_nav_wrap {
+    width: 100%;
+    height: 70px;
+    border-bottom: 1px solid #CDC9C5;
+    box-sizing: border-box;
+}
+
+.main_nav_wrap > .main_nav {
+  
+    width: 1280px;
+    margin: 0 auto;
+    height: 70px;
+}
+
+.main_nav > li:first-child {
+    width: 200px;
+    text-align: center;
+    border-left: 1px solid #CDC9C5;
+    border-right: 1px solid #CDC9C5;
+    margin-right: 10px;
+    background: url('../img/common/header_write.png') no-repeat;
+    -webkit-background-size: 20px;
+    background-size: 20px;
+    background-position: 65px center;
+}
+
+.main_nav > li > a {
+    color: #000;
+    display: inline-block;
+}
+
+.main_nav > li > a:hover {
+    text-decoration: none;
+    font-weight: bold;
+    color: #334663;
+}
+
+.main_nav > li:first-child > a {
+    width: 265px;
+    height: 70px;
+    text-align: center;
+    font-weight: bold;
+    color: #97616C;
+    margin-left: -12px;
+}
+
+.main_nav > li { 
+    width: 152px;
+    float: left;
+    line-height: 70px;
+    font-size: 18px;   
+    text-align: center;
+}
+
+.main_nav > li > a { 
+    width: 142px;
+   
+}
