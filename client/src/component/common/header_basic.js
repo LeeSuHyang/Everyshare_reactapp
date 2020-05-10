@@ -16,9 +16,9 @@ class HeaderBasic extends Component {
                 <div className="global_nav_wrap">
                     <nav className="global_nav">
                         <ul>
-                            <li><a href=" /">마이페이지</a></li>
-                            <li><a href=" /">로그인</a></li>
-                            <li><a href=" /">회원가입</a></li>
+                            <li><Link to={{pathname:'/profile'}}>마이페이지</Link></li>
+                            <li><Link to={{pathname:'/login'}}>로그인</Link></li>
+                            <li><Link to={{pathname:'/register'}}>회원가입</Link></li>
                         </ul>
                     </nav>
                 </div>
