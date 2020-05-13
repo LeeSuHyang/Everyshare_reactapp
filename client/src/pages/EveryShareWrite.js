@@ -15,7 +15,12 @@ class EveryShareWrite extends Component {
   render() {
 
     return (
-          <WriteForm onCreate={this.handleCreate}/>
+      <section id="main_contents">
+      <div id="contents_wrap">
+        <WriteForm onCreate={this.handleCreate}/> 
+      </div>
+    </section>
+         
     );
   }
 }

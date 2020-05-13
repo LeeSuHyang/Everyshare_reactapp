@@ -4,17 +4,6 @@
  *
 */
 
-#main_contents {
-    background-color: #F4F6FC;
-    padding-top: 92px;
-    box-sizing: border-box;
-    padding-bottom: 120px;
-}
-
-#contents_wrap {
-    width: 1280px;
-    margin: 0 auto;
-}
 
 #contents_wrap > .title_wrap {
     height: 56px;

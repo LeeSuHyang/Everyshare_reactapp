@@ -20,9 +20,9 @@ class BoardList extends Component {
   }
 
   _getList() {
-    const search = this.props.location.search;
-    const params = new URLSearchParams(search);
-    const category = params.get("category");
+    const category = this.props.location.state.category;
+    //const params = new URLSearchParams(search);
+    //const category = params.get("category");
     console.log(category);
 
     axios.get("http://localhost:3001/board", {
@@ -85,8 +85,6 @@ class BoardList extends Component {
           )
         ),
       });
-
-  
     }, 1500);
   };
 
@@ -94,48 +92,47 @@ class BoardList extends Component {
     let currentBoardList = this.state.currentBoardData;
 
     return (
-      <section id="main_contents">
-        <div id="contents_wrap">
-          <div className="title_wrap">
-            <h3>{this.state.category}</h3>
-            <select name="trade_state" id="board_trade_state">
-              <option>전체 거래 보기</option>
-              <option>거래중</option>
-              <option>거래대기</option>
-              <option>거래완료</option>
-            </select>
-          </div>
-          <div className="boardList_wrap">
-            <div className="boardList_header">
-              <div>거래유형</div>
-              <div>거래자 정보</div>
-              <div>제목</div>
-              <div>등록날짜</div>
-              <div>거래상태</div>
-            </div>
-            <InfiniteScroll
-              pageStart={0}
-              loadMore={this.fetchMoreData}
-              hasMore={this.state.maxPage}
-              loader={
-                <div className="loader loaderBox" key={0}>
-                  <Loader
-                    type="TailSpin"
-                    color="#979797"
-                    height={40}
-                    width={40}
-                    timeout={3000}
-                  />
-                </div>
-              }
-            >
-              {currentBoardList.map((row, index) => (
-                <BoardItem row={row} key={index}></BoardItem>
-              ))}
-            </InfiniteScroll>
-          </div>
+
+      <div id="contents_wrap">
+      <div className="title_wrap">
+        <h3>{this.state.category}</h3>
+        <select name="trade_state" id="board_trade_state">
+          <option>전체 거래 보기</option>
+          <option>거래중</option>
+          <option>거래대기</option>
+          <option>거래완료</option>
+        </select>
+      </div>
+      <div className="boardList_wrap">
+        <div className="boardList_header">
+          <div>거래유형</div>
+          <div>거래자 정보</div>
+          <div>제목</div>
+          <div>등록날짜</div>
+          <div>거래상태</div>
         </div>
-      </section>
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={this.fetchMoreData}
+          hasMore={this.state.maxPage}
+          loader={
+            <div className="loader loaderBox" key={0}>
+              <Loader
+                type="TailSpin"
+                color="#979797"
+                height={40}
+                width={40}
+                timeout={3000}
+              />
+            </div>
+          }
+        >
+          {currentBoardList.map((row, index) => (
+            <BoardItem row={row} key={index}></BoardItem>
+          ))}
+        </InfiniteScroll>
+      </div>
+    </div>
     );
   }
 }

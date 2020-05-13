@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import "../lib/css/EveryShare_boardlist.css";
-import BoardList from "../container/list/boardList";
+import Register from "../container/user/register";
 
-class EveryShareList extends Component {
+class EveryShareRegister extends Component {
   render() {
     return (
       <section id="main_contents">
         <div id="contents_wrap">
-          <BoardList></BoardList>
+          <Register></Register>
         </div>
       </section>
     );
   }
 }
 
-export default EveryShareList;
+export default EveryShareRegister;

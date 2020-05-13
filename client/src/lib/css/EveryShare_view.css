@@ -1,0 +1,30 @@
+/*
+ *
+   게시물 내용 보기에 관한 CSS
+ *
+*/
+
+
+.top_contents {
+    height: 713px;
+}
+
+.image_box_wrap {
+    width: 500px;
+    height: 100%;
+    margin-right: 32px;
+    background-color: red;
+    display: inline-block
+}
+
+.contents_box {
+    width: 740px;
+    height: 100%;
+    background-color: blue;
+    display: inline-block
+}
+
+.bottom_contents {
+    width: 100%;
+    background-color: palevioletred;
+}

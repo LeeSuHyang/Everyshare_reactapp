@@ -5,10 +5,10 @@ import logo_Image from "../../lib/img/common/everyshareLogo.png";
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 
-
 class HeaderBasic extends Component {
  
     render() {
+
         return(
 
         <div className="header_wrap">
@@ -16,9 +16,9 @@ class HeaderBasic extends Component {
                 <div className="global_nav_wrap">
                     <nav className="global_nav">
                         <ul>
-                            <li><a href=" /">마이페이지</a></li>
-                            <li><a href=" /">로그인</a></li>
-                            <li><a href=" /">회원가입</a></li>
+                            <li><Link to={{pathname:'/profile'}}>마이페이지</Link></li>
+                            <li><Link to={{pathname:'/login'}}>로그인</Link></li>
+                            <li><Link to={{pathname:'/register'}}>회원가입</Link></li>
                         </ul>
                     </nav>
                 </div>
@@ -54,4 +54,4 @@ class HeaderBasic extends Component {
     }
 }
 
-export default withRouter(HeaderBasic);
+export default withRouter(HeaderBasic)

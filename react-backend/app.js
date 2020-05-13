@@ -9,13 +9,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-
-<<<<<<< HEAD
 var db = require('./config/db');
 
-=======
 /* API 설계 ROUTER 연결 */
->>>>>>> feature/boardContentsView
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var boardRouter = require('./routes/board');
@@ -33,11 +29,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-<<<<<<< HEAD
 //router 설정
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-=======
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -46,7 +40,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', indexRouter); //메인
 app.use('/users', usersRouter); //사용자정보
 app.use('/board', boardRouter); 
->>>>>>> feature/boardContentsView
 
 /* 404 에러 */
 app.use(function(req, res, next) {
